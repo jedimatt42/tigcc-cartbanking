@@ -7,12 +7,12 @@
 
 #include "second.h"
 
-DECLARE_BANKED(set_text, BANK_1, void bk_set_text(), trampoline())
-DECLARE_BANKED(charsetlc, BANK_1, void bk_charsetlc(), trampoline())
+DECLARE_BANKED_VOID(set_text, BANK_1, bk_set_text, (), ())
+DECLARE_BANKED_VOID(charsetlc, BANK_1, bk_charsetlc, (), ())
+DECLARE_BANKED_VOID(halt, BANK_1, bk_halt, (), ())
+DECLARE_BANKED_VOID(second, BANK_1, bk_second, (), ())
 // this one passes arguments
-DECLARE_BANKED(cputs, BANK_1, void bk_cputs(const char* s), trampoline(s))
-DECLARE_BANKED(halt, BANK_1, void bk_halt(), trampoline())
-DECLARE_BANKED(second, BANK_1, void bk_second(), trampoline())
+DECLARE_BANKED_VOID(cputs, BANK_1, bk_cputs, (const char* s), (s))
 
 void main() {
   bk_set_text();

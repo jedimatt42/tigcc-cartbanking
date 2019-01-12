@@ -6,8 +6,8 @@
 
 #include "fourth.h"
 
-DECLARE_BANKED(cputs, BANK_1, void bk_cputs(const char* s), trampoline(s))
-DECLARE_BANKED(fourth, BANK_3, void bk_fourth(), trampoline())
+DECLARE_BANKED_VOID(cputs, BANK_1, bk_cputs, (const char* s), (s))
+DECLARE_BANKED_VOID(fourth, BANK_3, bk_fourth, (), ())
 
 void third() {
   // even though constant, copy it into stack space for cross bank visibility

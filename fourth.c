@@ -4,7 +4,7 @@
 // declare our current bank
 #define MYBANK BANK_3
 
-DECLARE_BANKED(cputs, BANK_1, void bk_cputs(const char* s), trampoline(s))
+DECLARE_BANKED_VOID(cputs, BANK_1, bk_cputs, (const char* s), (s))
 
 void fourth() {
   // even though constant, copy it into stack space for cross bank visibility

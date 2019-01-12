@@ -6,7 +6,7 @@
 
 #include "third.h"
 
-DECLARE_BANKED(third, BANK_2, void bk_third(), trampoline())
+DECLARE_BANKED_VOID(third, BANK_2, bk_third, (), ())
 
 void second() {
   // even though constant, copy it into stack space for cross bank visibility
