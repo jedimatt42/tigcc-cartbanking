@@ -17,3 +17,7 @@ void second() {
   bk_third();
 }
 
+int second_retint(int x) {
+  return x;
+}
+
