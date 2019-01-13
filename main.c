@@ -14,9 +14,12 @@ DECLARE_BANKED_VOID(second, BANK_1, bk_second, (), ())
 // this one passes arguments
 DECLARE_BANKED_VOID(cputs, BANK_1, bk_cputs, (const char* s), (s))
 
-DECLARE_BANKED(second_retint, BANK_1, int, bk_second_retint, (), ())
+DECLARE_BANKED(second_retint, BANK_1, int, bk_second_retint, (int x), (x))
+DECLARE_BANKED_CHAR(second_rettopchar, BANK_1, char, bk_second_rettopchar, (int x), (x))
+
 
 void assertEquals(int found, int expected);
+void assertCharEquals(char found, char expected);
 
 void main() {
   bk_set_text();
@@ -39,10 +42,25 @@ void main() {
   const char msg2[] = "passed: int (*)(int)";
   bk_cputs(msg2);
 
+  char c = bk_second_rettopchar(0xA500);
+  assertCharEquals(c, 0xA5);
+  
+  gotoxy(0,5);
+  const char msg3[] = "passed: char (*)(int)";
+  bk_cputs(msg3);
+
   bk_halt();
 }
 
 void assertEquals(int found, int expected) {
+  if (found != expected) {
+    const char emsg[] = "error, halting";
+    bk_cputs(emsg);
+    bk_halt(); 
+  }
+}
+
+void assertCharEquals(char found, char expected) {
   if (found != expected) {
     const char emsg[] = "error, halting";
     bk_cputs(emsg);

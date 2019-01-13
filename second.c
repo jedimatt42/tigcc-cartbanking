@@ -21,3 +21,7 @@ int second_retint(int x) {
   return x;
 }
 
+char second_rettopchar(int x) {
+  return x >> 8;
+}
+

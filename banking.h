@@ -26,9 +26,14 @@ extern void* trampoline();
  * generates a static inline function:
  *
  *   static inline int far_sum(int a, int b);
+ *
+ * Functions that return an 8bit value (char) must use DECLARE_BANKED_CHAR
+ * instead. This is required to prevent incorrect manipulation of the 
+ * return value.
  * 
- * functions with a void return type use a different macro. Given
- * function such as void cputc(const char c):
+ * Functions with a void return type use a different macro. Usage is the
+ * same as the earlier two, but you do not specify the return_type parameter.
+ * Given function such as void cputc(const char c):
  * 
  *   DECLARE_BANKED_VOID(cputc, BANK_1, far_cputc, (const char c), (c))
  * 
@@ -45,7 +50,7 @@ extern void* trampoline();
 __attribute__ ((gnu_inline, always_inline)) \
 static inline return_type banked_name param_types { \
   static const int foo[]={(int)MYBANK, (int)realname, (int)bank}; \
-  __asm__("li r12, %0\n\tmov r12,@tramp_data\n\t" : : "i" (foo): "r12" ); \
+  tramp_data = (int*) foo; \
   return trampoline param_list; \
 }
 
@@ -53,9 +58,18 @@ static inline return_type banked_name param_types { \
 __attribute__ ((gnu_inline, always_inline)) \
 static inline void banked_name param_types { \
   static const int foo[]={(int)MYBANK, (int)realname, (int)bank}; \
-  __asm__("li r12, %0\n\tmov r12,@tramp_data\n\t" : : "i" (foo): "r12" ); \
+  tramp_data = (int*) foo; \
   trampoline param_list; \
 }
+
+#define DECLARE_BANKED_CHAR(realname, bank, return_type, banked_name, param_types, param_list) \
+__attribute__ ((gnu_inline, always_inline)) \
+static inline return_type banked_name param_types { \
+  static const int foo[]={(int)MYBANK, (int)realname, (int)bank}; \
+  tramp_data = (int*) foo; \
+  return ((int)(trampoline param_list)) >> 8; \
+}
+
 
 #endif
 
