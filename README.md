@@ -31,12 +31,16 @@ makefile, and in the linkfile.
 ## Files:
 
 * banks.h - defines constants for the write addresses that trigger cartridge bank switching
-* banking.h - defines the DECLARED_BANK macro and related trampoline symbols
+* banking.h - Documents and defines the DECLARED_BANK macro and related trampoline symbols and how to use them. Start here!
 * bankdata.c - module defining storage for the bank_stack, and trampoline parameter location
 * trampoline.asm - module defining trampoline function
 * Makefile - defines stack size, extracts binary chunks and composes cartrige bin
 * linkfile - defines which modules end up at what address spaces.
 * crt0.c - defines startup routine for C, and memory initialization, calls main.
 * header.asm - defines cartridge header for TI-99/4A, sets bank_0, and calls c startup
+* main.c - example usage
+* second.c - example usage
+* third.c - example usage
+* fourth.c - example usage
 
 
